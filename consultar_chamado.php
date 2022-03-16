@@ -5,6 +5,8 @@
 //chamados
 $chamados = array();
 
+$chamados_filtrados = array();
+
 //abrir o arquivo 
 $arquivo = fopen('../../app_help_desk/arquivo.hd', 'r');
 
@@ -43,7 +45,7 @@ fclose($arquivo);
     <nav class="navbar navbar-dark bg-dark">
       <a class="navbar-brand" href="#">
         <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-        App Help Desk
+        Controle de Manutenção
       </a>
         <ul class=navbar-nav>
         <li class="nav-item">
@@ -60,25 +62,64 @@ fclose($arquivo);
             <div class="card-header">
               Consulta de chamado
             </div>
-            
             <div class="card-body">
+              <form method="post" action="">              
+                <h4>Filtrar chamados por Equipamentos</h4>
+                    <div class="form-group">
+                      
+                      <select name="equipamento" class="form-control">
+                        <option>Todos</option>
+                        <option>Impressora</option>
+                        <option>Hardware</option>
+                        <option>Software</option>
+                        <option>Rede</option>
+                      </select>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-lg btn-info btn-block" type="submit">Pesquisar</button>
+                        
+                      </div>
+                </form>
+
+            </div>
+            <div class="card-body">
+            <?php
+
+         /*    $equipamento = $_POST['equipamento'];
+
+            $filtro=false;
+            if(isset($equipamento) && ($equipamento != 'Todos')){
+              $filtro = true;
+            } */
+
+             
+              ?>
 
               <? foreach($chamados as $chamado) { ?>
-               
+              
                   <?php
                   $chamado_dados = explode('#',$chamado );
 
+              /*     if($filtro){
+                     if(in_array($equipamento, $chamado_dados)){
+                        $chamados_filtrados = explode('#',$chamado );
+                      
+                       $chamados_dados = $chamados_filtrados;
+                    }
+                  } */
                   if($_SESSION['perfil_id'] == 2){
                     //só exibe chamados pelo o próprio usuário
                     if($_SESSION['id'] != $chamado_dados[0]){
                       continue;
                     }
                   }
+                 
+                 
 
                   if(count($chamado_dados) < 3) {
                     continue;
                   }
-
+                  
                    ?>
                   <div class="card mb-3 bg-light">
                     <div class="card-body">
